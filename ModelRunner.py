@@ -6,23 +6,18 @@ import matplotlib.patches as patches
 
 from Part import Part
 
-model = Model("./cutting.mzn")
-solver = Solver.lookup("gecode")
+model = Model("./cutting_min_xy.mzn")
+solver = Solver.lookup("chuffed")
 instance = Instance(solver, model)
 
-panel = Part(4000, 4000)
+panel = Part(2000, 2000)
 # parts = [Part(2000, 4000), Part(2000, 2000), Part(1000, 2000), Part(500, 2000), Part(2000, 500)]
 parts = [Part(538, 474), Part(538, 474), Part(541, 70), Part(541, 70), Part(596, 144), Part(596, 144),
-         Part(538, 474), Part(538, 474), Part(541, 70), Part(541, 70), Part(596, 144), Part(596, 144),
-         Part(762, 574), Part(762, 574), Part(762, 574), Part(762, 574), Part(307, 596), Part(307, 596),
+         Part(596, 144), Part(596, 144), #Part(596, 144), Part(596, 144),
          Part(562, 80), Part(562, 80), Part(562, 560), Part(562, 560), Part(1800, 100), Part(1800, 100),
-         Part(762, 574), Part(762, 574), Part(762, 574), Part(762, 574), Part(307, 596), Part(307, 596),
-         Part(762, 574), Part(762, 574), Part(762, 574), Part(762, 574), Part(307, 596), Part(307, 596),
-         Part(762, 574), Part(762, 574), Part(762, 574), Part(762, 574), Part(307, 596), Part(307, 596),
-         Part(562, 80), Part(562, 80), Part(562, 560), Part(562, 560), Part(1800, 100), Part(1800, 100),
-         Part(562, 80), Part(562, 80), Part(562, 560), Part(562, 560), Part(1800, 100), Part(1800, 100),
-         Part(562, 80), Part(562, 80), Part(562, 560), Part(562, 560), Part(1800, 100), Part(1800, 100),]
-#parts = [Part(1800, 100), Part(1800, 100), Part(762, 574), Part(762, 574), Part(762, 574), Part(762, 574)]
+         Part(1800, 100), Part(1800, 100), ]
+# parts = [Part(1800, 100), Part(1800, 100), Part(762, 574), Part(762, 574), Part(762, 574), Part(762, 574)]
+#parts = [Part(1800, 100), Part(1800, 100), Part(1800, 100), Part(1800, 100)]
 
 instance["nParts"] = len(parts)
 
@@ -47,7 +42,7 @@ ax1 = fig1.add_subplot(111)
 xlim = (0, panel.side_one)
 ylim = (0, panel.side_two)
 
-for i in range(len(result["x"])):
+for i in range(len(result["x"])):  # no need to draw the last two rectangles as they are placeholders
     xy = (result["x"][i], result["y"][i])
     dx = result["dx"][i]
     dy = result["dy"][i]
