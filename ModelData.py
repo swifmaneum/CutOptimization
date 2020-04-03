@@ -1,8 +1,8 @@
 class ModelData(object):
 
     def __init__(self, panel, parts):
-        self.sheetLength = panel.side_one
-        self.sheetWidth = panel.side_two
+        self.sheet_length = panel.side_one
+        self.sheet_width = panel.side_two
 
         self.rect_size = []
         self.valid_shapes = []
@@ -26,9 +26,9 @@ class ModelData(object):
         for i in range(0, len(self.rect_size)):
             self.shape.append({i + 1})
 
-        self.nObjects = len(parts)
-        self.nRectangles = len(self.rect_size)
-        self.nShapes = len(self.shape)
+        self.n_objects = len(parts)
+        self.n_rectangles = len(self.rect_size)
+        self.n_shapes = len(self.shape)
 
     def copy_data_to(self, instance):
         for key, value in instance.input.items():

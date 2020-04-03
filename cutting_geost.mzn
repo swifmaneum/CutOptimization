@@ -2,20 +2,20 @@ include "geost.mzn";
 include "lex_greatereq.mzn";
 
 int: k = 2;
-int: nObjects;
-int: nRectangles;
-int: nShapes;
+int: n_objects;
+int: n_rectangles;
+int: n_shapes;
 
-int: sheetLength;
-int: sheetWidth;
+int: sheet_length;
+int: sheet_width;
 
 set of int: DIMENSIONS = 1..k;
-set of int: OBJECTS    = 1..nObjects;
-set of int: RECTANGLES = 1..nRectangles;
-set of int: SHAPES     = 1..nShapes;
+set of int: OBJECTS    = 1..n_objects;
+set of int: RECTANGLES = 1..n_rectangles;
+set of int: SHAPES     = 1..n_shapes;
 
-array[DIMENSIONS] of int:             l  = [0, 0];
-array[DIMENSIONS] of var int:         u;
+array[DIMENSIONS] of int:             lower_bounds  = [0, 0];
+array[DIMENSIONS] of var int:         upper_bounds;
 array[RECTANGLES,DIMENSIONS] of int:  rect_size;
 array[RECTANGLES,DIMENSIONS] of int:  rect_offset;
 array[SHAPES] of set of RECTANGLES:   shape;
@@ -24,8 +24,8 @@ array[OBJECTS] of var SHAPES:         kind;
 
 array[OBJECTS] of set of SHAPES: valid_shapes;
 
-constraint u[1] <= sheetLength;
-constraint u[2] <= sheetWidth;
+constraint upper_bounds[1] <= sheet_length;
+constraint upper_bounds[2] <= sheet_width;
 
 constraint forall (obj in OBJECTS) (
     kind[obj] in valid_shapes[obj]
@@ -54,8 +54,8 @@ constraint
         x,              % the base position of each object.
                         % (var) x[i,j] is the position of object i in dimension j
         kind,           % (var) the shape used by each object
-        l,              % array of lower bounds
-        u               % array of upper bounds
+        lower_bounds,   % array of lower bounds
+        upper_bounds    % array of upper bounds
     );
 
 % Symmetry breaking
@@ -67,5 +67,5 @@ constraint forall(i, j in OBJECTS where i < j)(
 constraint lex_greatereq(row(x, 1) , reverse(row(x, 1)));
 constraint lex_greatereq(row(x, 2) , reverse(row(x, 2)));
 
-var int: obj = product(u);
-solve minimize obj;
+var int: area = product(upper_bounds);
+solve minimize area;

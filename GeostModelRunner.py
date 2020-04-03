@@ -11,29 +11,19 @@ instance = Instance(solver, model)
 
 panel = Part(2000, 2000)
 
-#parts = [Part(538, 474), Part(538, 474), Part(538, 474), Part(538, 474),
-#      Part(538, 474), Part(538, 474), Part(538, 474), Part(538, 474),
-#      Part(538, 474),Part(538, 474), Part(538, 474), Part(538, 474), ]
-# parts = [Part(2000, 3000), Part(2000, 2000), Part(1000, 2000), Part(1000, 4000)]
 parts = [Part(538, 474), Part(538, 474), Part(538, 474), Part(538, 474), Part(538, 474), Part(538, 474),
          Part(538, 474), Part(538, 474), Part(538, 474), Part(596, 144), Part(596, 144), Part(596, 144),
          Part(596, 144), Part(1800, 100), Part(1800, 100)]
 
-#parts = [Part(538, 474), Part(538, 474), Part(538, 474), Part(538, 474), Part(538, 474), Part(538, 474),
-#         Part(538, 474), Part(538, 474), Part(538, 474), Part(596, 144), Part(596, 144), Part(596, 144),
-#         Part(596, 144), Part(538, 100), Part(538, 100), Part(1800, 100), Part(1800, 100)]
-
 data = ModelData(panel, parts)
 data.copy_data_to(instance)
+
 print("Solving ...")
 result = instance.solve()
 
 if result.solution is not None:
     print("Solved in: " + str(result.statistics["time"]))
-    print(str(result.statistics))
-    print("Objective: " + str(result.statistics["objective"]))
-    print(result["x"])
-    print(result["kind"])
+    print("Used area: " + str(result.statistics["objective"]))
 
     rectangles_to_draw = []
     for i in range(len(result["x"])):
