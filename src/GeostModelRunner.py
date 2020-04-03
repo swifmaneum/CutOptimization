@@ -1,11 +1,11 @@
 from minizinc import Instance, Model, Solver
 
-from ModelData import ModelData
-from Part import Part
-from Plot import Plot
-from RectangleToDraw import RectangleToDraw
+from src.ModelData import ModelData
+from src.Part import Part
+from src.Plot import Plot
+from src.RectangleToDraw import RectangleToDraw
 
-model = Model("./cutting_geost.mzn")
+model = Model("./models/cutting_geost.mzn")
 solver = Solver.lookup("chuffed")
 instance = Instance(solver, model)
 

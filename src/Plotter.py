@@ -3,14 +3,14 @@ import random
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 
-from Part import Part
+from src.Part import Part
 
 panel = Part(2000, 2000)
 
-result = {"x": [1, 2, 0, 1, 0, 1],
-          "y": [140, 240, 340, 814, 0, 70],
-          "dx": [1800, 1800, 538, 538, 541, 541],
-          "dy": [100, 100, 474, 474, 70, 70]}
+result = {"x": [820, 195, 819, 0, 474, 1358, 1357, 948, 1422, 224, 51, 224, 224, 96, 96],
+          "y": [200, 674, 674, 1148, 1148, 200, 674, 1148, 1148, 242, 552, 386, 530, 0, 100],
+          "dx": [538, 538, 538, 474, 474, 538, 538, 474, 474, 596, 144, 596, 596, 1800, 1800],
+          "dy": [474, 474, 474, 538, 538, 474, 474, 538, 538, 144, 596, 144, 144, 100, 100]}
 
 fig1 = plt.figure()
 ax1 = fig1.add_subplot(111)
@@ -28,4 +28,5 @@ for i in range(len(result["x"])):  # no need to draw the last two rectangles as 
 
 plt.ylim(ylim)
 plt.xlim(xlim)
+plt.gca().set_aspect('equal', adjustable='box')
 plt.show()
