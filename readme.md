@@ -14,11 +14,12 @@ pip install requirements.txt
 Adjust and run the `GeostModelRunner.py`
 
 ```python
-# Panel describes the base area to place the parts on
+# Panel describes the base area to place the 
+# parts on by its x and y dimension.
 panel = Part(2000, 2000)
 
-# Parts are the parts to place on the panel
-# Parts can be symmetric
-# Order of x and y dimensions is arbitrary
+# Parts are the parts to place on the panel.
+# Parts can be symmetric.
+# Order of x and y dimensions is arbitrary.
 parts = [Part(1800, 100), Part(1800, 100)]
 ```
