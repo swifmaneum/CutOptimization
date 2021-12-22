@@ -1,3 +1,6 @@
+from itertools import permutations
+
+
 class ModelData(object):
 
     def __init__(self, panel, parts):
@@ -7,16 +10,14 @@ class ModelData(object):
         self.rect_size = []
         self.valid_shapes = []
         for part in parts:
-            if part.is_symmetric():
-                if [part.side_one, part.side_two] not in self.rect_size:
-                    self.rect_size.append([part.side_one, part.side_two])
-                self.valid_shapes.append({self.rect_size.index([part.side_one, part.side_two]) + 1})
-            else:
-                if [part.side_one, part.side_two] not in self.rect_size:
-                    self.rect_size.append([part.side_one, part.side_two])
-                    self.rect_size.append([part.side_two, part.side_one])
-                self.valid_shapes.append({self.rect_size.index([part.side_one, part.side_two]) + 1,
-                                          self.rect_size.index([part.side_two, part.side_one]) + 1})
+            indices = set()
+            part_permutations = list(permutations([part.side_one, part.side_two]))
+            for permutation in part_permutations:
+                permutation_as_list = list(permutation)
+                if permutation_as_list not in self.rect_size:
+                    self.rect_size.append(list(permutation_as_list))
+                indices.add(self.rect_size.index(permutation_as_list) + 1)
+            self.valid_shapes.append(indices)
 
         self.rect_offset = []
         for _ in self.rect_size:
