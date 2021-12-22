@@ -1,5 +1,6 @@
 class Part(object):
 
-    def __init__(self, side_one, side_two):
+    def __init__(self, side_one, side_two, side_three):
         self.side_one = side_one
         self.side_two = side_two
+        self.side_three = side_three

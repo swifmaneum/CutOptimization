@@ -6,12 +6,13 @@ class ModelData(object):
     def __init__(self, panel, parts):
         self.sheet_length = panel.side_one
         self.sheet_width = panel.side_two
+        self.sheet_height = panel.side_three
 
         self.rect_size = []
         self.valid_shapes = []
         for part in parts:
             indices = set()
-            part_permutations = list(permutations([part.side_one, part.side_two]))
+            part_permutations = list(permutations([part.side_one, part.side_two, part.side_three]))
             for permutation in part_permutations:
                 permutation_as_list = list(permutation)
                 if permutation_as_list not in self.rect_size:
@@ -21,7 +22,7 @@ class ModelData(object):
 
         self.rect_offset = []
         for _ in self.rect_size:
-            self.rect_offset.append([0, 0])
+            self.rect_offset.append([0, 0, 0])
 
         self.shape = []
         for i in range(0, len(self.rect_size)):

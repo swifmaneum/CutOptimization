@@ -1,20 +1,21 @@
 include "geost.mzn";
 include "lex_greatereq.mzn";
 
-int: k = 2;
+int: k = 3;
 int: n_objects;
 int: n_rectangles;
 int: n_shapes;
 
 int: sheet_length;
 int: sheet_width;
+int: sheet_height;
 
 set of int: DIMENSIONS = 1..k;
 set of int: OBJECTS    = 1..n_objects;
 set of int: RECTANGLES = 1..n_rectangles;
 set of int: SHAPES     = 1..n_shapes;
 
-array[DIMENSIONS] of int:             lower_bounds  = [0, 0];
+array[DIMENSIONS] of int:             lower_bounds  = [0, 0, 0];
 array[DIMENSIONS] of var int:         upper_bounds;
 array[RECTANGLES,DIMENSIONS] of int:  rect_size;
 array[RECTANGLES,DIMENSIONS] of int:  rect_offset;
@@ -26,6 +27,7 @@ array[OBJECTS] of set of SHAPES: valid_shapes;
 
 constraint upper_bounds[1] <= sheet_length;
 constraint upper_bounds[2] <= sheet_width;
+constraint upper_bounds[3] <= sheet_height;
 
 constraint forall (obj in OBJECTS) (
     kind[obj] in valid_shapes[obj]
@@ -59,10 +61,10 @@ constraint
     );
 
 % Symmetry breaking
-constraint forall(i, j in OBJECTS where i < j)(
-    valid_shapes[i] = valid_shapes[j]
-        <-> x[i, 1] + rect_size[kind[i], 1] <= x[j, 1]
-        \/ x[i, 2] + rect_size[kind[i], 2] <= x[j, 2]);
+%constraint forall(i, j in OBJECTS where i < j)(
+%    valid_shapes[i] = valid_shapes[j]
+%        <-> x[i, 1] + rect_size[kind[i], 1] <= x[j, 1]
+%        \/ x[i, 2] + rect_size[kind[i], 2] <= x[j, 2]);
 
 constraint lex_greatereq(row(x, 1) , reverse(row(x, 1)));
 constraint lex_greatereq(row(x, 2) , reverse(row(x, 2)));
